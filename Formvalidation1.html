@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register new account</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#submitBtn").click(function () {
+          var patt_email =
+            /^[a-zA-Z]+\w*([.-_]\w+)*\@[a-zA-Z]+\w*([.-_]\w+)*(\.\w+)+$/;
+          var patt_phone = /^0[1-9]\d{8,10}$/;
+
+          var errorBox = $("#errorBox");
+          var successBox = $("#successBox");
+
+          var username = $("#username").val();
+          var password = $("#password").val();
+          var confirmPassword = $("#confirmPassword").val();
+          var email = $("#email").val();
+          var phone = $("#phone").val();
+
+          errorArray = [];
+          if (username == "") errorArray.push("Username can't be empty");
+          if (password.length < 6 || password.length > 20)
+            errorArray.push("Password length must be from 6 to 20 characters");
+          if (password != confirmPassword)
+            errorArray.push("Password doesn't match");
+          if (patt_email.test(email) == false)
+            errorArray.push("Email is invalid");
+          if (patt_phone.test(phone) == false)
+            errorArray.push("Phone number is invalid");
+
+          if (errorArray.length == 0) {
+            successBox.removeClass("d-none");
+            errorBox.addClass("d-none");
+
+            return false;
+          } else {
+            successBox.addClass("d-none");
+            errorBox.removeClass("d-none");
+
+            errorBox.html("<strong>Please check invalid data: </strong>");
+            var strMsg = "";
+            strMsg += "<ol>";
+            for (const index in errorArray) {
+              strMsg += "<li>" + errorArray[index] + "</li>";
+            }
+            strMsg += "</ol>";
+            errorBox.append(strMsg);
+            return false;
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">REGISTER NEW ACCOUNT</h1>
+      <div class="mx-auto">
+        <form>
+          <div class="form-group row">
+            <label class="col-4 col-form-label" for="username">Username</label>
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-user"></i>
+                  </div>
+                </div>
+                <input
+                  id="username"
+                  name="username"
+                  placeholder="Please enter username"
+                  type="text"
+                  class="form-control"
+                  required="required"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="password" class="col-4 col-form-label">Password</label>
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-key"></i>
+                  </div>
+                </div>
+                <input
+                  id="password"
+                  name="password"
+                  placeholder="Please enter password"
+                  type="password"
+                  class="form-control"
+                  required="required"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="confirmPassword" class="col-4 col-form-label"
+              >Confirm password</label
+            >
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-key"></i>
+                  </div>
+                </div>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Please confirm password"
+                  type="password"
+                  class="form-control"
+                  required="required"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-4 col-form-label">Email</label>
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-address-card-o"></i>
+                  </div>
+                </div>
+                <input
+                  id="email"
+                  name="email"
+                  placeholder="Please enter email"
+                  type="text"
+                  class="form-control"
+                  required="required"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="phone" class="col-4 col-form-label">Phone</label>
+            <div class="col-8">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                </div>
+                <input
+                  id="phone"
+                  name="phone"
+                  placeholder="Please enter phone"
+                  type="text"
+                  class="form-control"
+                  required="required"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-4 col-8">
+              <button
+                id="submitBtn"
+                name="submit"
+                type="submit"
+                class="btn btn-primary"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+        <div id="successBox" class="alert alert-success d-none">
+          <strong>Success!</strong>
+        </div>
+        <div id="errorBox" class="alert alert-danger d-none"></div>
+      </div>
+    </div>
+  </body>
+</html>
